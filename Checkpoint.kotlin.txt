@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textViewDistancia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Distância"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewPrecoGasolina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Preço"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDistancia" />
+
+    <TextView
+        android:id="@+id/textViewAutonomia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Autonomia "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrecoGasolina" />
+
+
+    <EditText
+        android:id="@+id/editTextDistancia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewDistancia"
+        app:layout_constraintTop_toTopOf="@+id/textViewDistancia" />
+
+    <EditText
+        android:id="@+id/editTextPreco"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewPrecoGasolina"
+        app:layout_constraintTop_toTopOf="@+id/textViewPrecoGasolina" />
+
+    <EditText
+        android:id="@+id/editTextAutonomia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewAutonomia"
+        app:layout_constraintTop_toTopOf="@+id/textViewAutonomia" />
+
+
+    <TextView
+        android:id="@+id/textViewGasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Seu gasto total será de:"
+        app:layout_constraintStart_toStartOf="@id/editTextAutonomia"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAutonomia" />
+
+    <EditText
+        android:id="@+id/textViewR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:hint="R$ 0"
+        app:layout_constraintStart_toStartOf="@id/textViewGasto"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGasto" />
+
+
+    <Button
+        android:id="@+id/calcular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/material_dynamic_neutral_variant99"
+        android:text="calcular"
+        app:layout_constraintStart_toStartOf="@id/textViewR"
+        app:layout_constraintTop_toBottomOf="@id/textViewR" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+*************************************
+
+
+package com.example.henriquebendzius_rm87348
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.example.henriquebendzius_rm87348.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+
+    lateinit var bind: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bind = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bind.root)
+
+        bind.calcular.setOnClickListener {
+            val distancia = bind.editTextDistancia.text.toString().toFloat()
+            val preco = bind.editTextPreco.text.toString().toFloat()
+            val autonomia = bind.editTextAutonomia.text.toString().toFloat()
+            val resultado = calculo(distancia, preco, autonomia)
+
+            bind.textViewR.setText("$resultado")
+
+        }
+
+
+    }
+
+    fun calculo(distancia: Float, preco: Float, autonomia: Float): Float {
+        return (distancia * preco) / autonomia
+    }
+
+
+}
